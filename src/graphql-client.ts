@@ -3,7 +3,7 @@ import { createClient as createWSClient } from "graphql-ws";
 import { cacheExchange } from "@urql/exchange-graphcache";
 
 const wsClient = createWSClient({
-  url: "ws://impostor-server.fly.dev/graphql",
+  url: "wss://impostor-server.fly.dev/graphql",
 });
 
 export const graphqlClient = new Client({
