@@ -80,7 +80,7 @@ export const Room = ({ id }: { id: number }) => {
     }
   }, [id, playerName, roomQueryResult.data, joinRoom]);
 
-  const [startGameMutationResult, startGame] = useMutation(StartGameMutation);
+  const [_startGameMutationResult, startGame] = useMutation(StartGameMutation);
 
   useSubscription({
     query: RoomUpdatedSubscription,
