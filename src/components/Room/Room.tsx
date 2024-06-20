@@ -5,6 +5,8 @@ import { NameContext } from "../../contexts/name-context";
 import { Router } from "../Router";
 import { RoomOptions } from "./RoomOptions/RoomOptions";
 
+import { Button } from "../ui/button";
+
 const RoomQuery = graphql(`
   query RoomById($id: Int!) {
     room(id: $id) {
@@ -119,35 +121,42 @@ export const Room = ({ id }: { id: number }) => {
     return;
   }
 
+  const playersList = roomQueryResult.data.room?.players;
+  const gameHasStarted = gameStartedSubscriptionResult.data;
+  const role = gameStartedSubscriptionResult.data?.gameStarted?.__typename;
+
   return (
-    <div>
-      <div className="configuration">
+    <main className="room-container flex flex-col items-center space-y-9 w-full">
+      <h1 className="text-4xl text-slate-200">Impostor Online Game</h1>
+      <h2 className="text-2xl text-slate-200">Welcome to Room {id}!</h2>
+      <div className="configuration w-full">
         <RoomOptions id={id} />
       </div>
-      <h2>Welcome to Room {id}</h2>
-      <div>
-        Players:
-        <ol>
-          {roomQueryResult.data.room?.players.map(({ name }) => {
-            return <li key={name}>{name === playerName ? `${name} (you)` : `${name}`}</li>;
+      <div className="list-container flex flex-col w-full items-center space-y-6 py-3">
+        <p className="text-xl text-slate-100">Players:</p>
+        <ol className="list-content flex flex-col w-full items-center max-h-[500px] overflow-y-scroll text-slate-200">
+          {playersList?.map((player) => {
+            return (
+              <li key={player.name}>
+                {player.name === playerName ? `${player.name} (you)` : `${player.name}`}
+              </li>
+            );
           })}
         </ol>
       </div>
       <div>
-        <button type="button" onClick={() => startGame({ roomId: id })}>
-          Start game!
-        </button>
+        <Button type="button" onClick={() => startGame({ roomId: id })}>
+          Start Game
+        </Button>
       </div>
 
-      <div>
-        {gameStartedSubscriptionResult.data ? (
-          <span>
-            {gameStartedSubscriptionResult.data.gameStarted?.__typename === "ImpostorInfo"
-              ? "Imposteur!"
-              : `Your word is "${gameStartedSubscriptionResult.data.gameStarted?.word}"`}
-          </span>
-        ) : null}
-      </div>
-    </div>
+      {gameHasStarted && (
+        <p className="text-slate-100 text-2xl">
+          {role === "ImpostorInfo"
+            ? "You are the impostor! 🤫"
+            : `The secret word is "${gameStartedSubscriptionResult.data?.gameStarted?.word}" 😎`}
+        </p>
+      )}
+    </main>
   );
 };

@@ -4,6 +4,8 @@ import { NameContext } from "../../../../contexts/name-context";
 import { Router } from "../../../Router";
 import { graphql } from "gql.tada";
 
+import { Button } from "@/components/ui/button";
+
 const CreateRoomMutation = graphql(`
   mutation CreateRoom($playerName: String!) {
     createRoom(playerName: $playerName, language: fr) {
@@ -32,8 +34,8 @@ export const CreateRoomOption = () => {
   }
 
   return (
-    <button type="button" onClick={() => createRoom({ playerName: name })}>
+    <Button type="button" onClick={() => createRoom({ playerName: name })}>
       Create room
-    </button>
+    </Button>
   );
 };

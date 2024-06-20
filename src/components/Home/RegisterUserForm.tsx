@@ -3,6 +3,10 @@ import { type FormEvent, useState } from "react";
 import { useContext } from "react";
 import { NameContext } from "../../contexts/name-context";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 export const RegisterUserForm = () => {
   const [userInput, setUserInput] = useState<string>("");
   const [_name, setName] = useContext(NameContext);
@@ -18,10 +22,14 @@ export const RegisterUserForm = () => {
   };
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      <label>Enter your name!</label>
-      <input name="userName" value={userInput} onChange={handleInputChange} placeholder="John" />
-      <button type="submit">Done!</button>
-    </form>
+    <section className="username-form-container">
+      <form onSubmit={handleFormSubmit} className="flex flex-col space-y-6 items-center ">
+        <Label className="form-label text-xl text-slate-100">Enter your name</Label>
+        <Input name="userName" value={userInput} onChange={handleInputChange} placeholder="John" />
+        <Button type="submit" disabled={!userInput}>
+          Next
+        </Button>
+      </form>
+    </section>
   );
 };
