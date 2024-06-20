@@ -10,16 +10,22 @@
     "codegen": "graphql-codegen"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.4.2",
     "@swan-io/chicane": "^2.0.0",
     "@types/react-copy-to-clipboard": "^5.0.7",
     "@urql/exchange-graphcache": "^7.1.1",
+    "autoprefixer": "^10.4.19",
+    "framer-motion": "^11.2.11",
     "gql.tada": "^1.7.6",
     "graphql": "^16.8.2",
     "graphql-ws": "^5.16.0",
+    "postcss": "^8.4.38",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-toastify": "^10.0.5",
+    "tailwindcss": "^3.4.4",
+    "ts-node": "^10.9.2",
     "ts-pattern": "^5.2.0",
     "urql": "^4.1.0"
   },
