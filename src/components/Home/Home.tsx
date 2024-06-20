@@ -1,30 +1,15 @@
 import { useContext } from "react";
-import { NameContext } from "../../name-context";
-import { CreateRoomButton } from "../CreateRoomButton/CreateRoomButton";
-import { JoinRoomButton } from "../JoinRoomButton/JoinRoomButton";
+import { NameContext } from "../../contexts/name-context";
+import { RoomOptionsForm } from "./RoomOptions/RoomOptions";
+import { RegisterUserForm } from "./RegisterUserForm";
 
 export const Home = () => {
+  const [name] = useContext(NameContext);
+
   return (
     <>
-      <NameInput />
-      <CreateRoomButton />
-      <JoinRoomButton />
-      <NameDisplay />
+      <h1>Impostor Online Game</h1>
+      {name ? <RoomOptionsForm /> : <RegisterUserForm />}
     </>
   );
-};
-
-const NameInput = () => {
-  const [name, setName] = useContext(NameContext);
-
-  return (
-    <div>
-      <input value={name} onChange={(e) => setName(e.target.value)} />
-    </div>
-  );
-};
-
-const NameDisplay = () => {
-  const [name] = useContext(NameContext);
-  return <div>Hello {name}!</div>;
 };
