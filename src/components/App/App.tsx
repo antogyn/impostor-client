@@ -4,7 +4,7 @@ import { match } from "ts-pattern";
 import { Router } from "../Router";
 import { Home } from "../Home/Home";
 import { Room } from "../Room/Room";
-import { SetName } from "../Room/SetName";
+import { SetName } from "../SetName/SetName";
 
 function App() {
   const route = Router.useRoute(["Home", "Room", "SetName"]);
