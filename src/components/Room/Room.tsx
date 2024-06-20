@@ -1,7 +1,9 @@
-import { useContext, useEffect } from "react";
-import { useMutation, useQuery, useSubscription } from "urql";
-import { NameContext } from "../../name-context";
 import { graphql } from "gql.tada";
+import { useContext, useEffect, useState } from "react";
+import { useMutation, useQuery, useSubscription } from "urql";
+import { NameContext } from "../../contexts/name-context";
+import { Router } from "../Router";
+import { RoomOptions } from "./RoomOptions/RoomOptions";
 
 const RoomQuery = graphql(`
   query RoomById($id: Int!) {
@@ -39,15 +41,15 @@ const GameStartedSubscription = graphql(`
 `);
 
 const JoinRoomMutation = graphql(`
-  mutation JoinRoom($roomId: Int!, $playerName: String!) {
+   mutation JoinRoom($roomId: Int!, $playerName: String!) {
     joinRoom(roomId: $roomId, playerName: $playerName) {
-      id
-      players {
-        name
-      }
-    }
-  }
-`);
+       id
+       players {
+         name
+       }
+     }
+   }
+ `);
 
 const StartGameMutation = graphql(`
   mutation StartGame($roomId: Int!) {
@@ -66,19 +68,31 @@ export const Room = ({ id }: { id: number }) => {
     pause: id === null,
   });
 
-  const [_joinRoomMutationResult, joinRoom] = useMutation(JoinRoomMutation);
+  const [_joinRoomResult, joinRoom] = useMutation(JoinRoomMutation);
+  const [hasJoined, setHasJoined] = useState(false);
 
   useEffect(() => {
+    if (!playerName) {
+      Router.push("SetName", { roomId: id.toString() });
+      return;
+    }
     if (
       roomQueryResult.data?.room &&
-      !roomQueryResult.data.room.players.some(({ name }) => name === playerName)
+      !roomQueryResult.data.room.players.some(({ name }) => name === playerName) &&
+      !hasJoined
     ) {
-      joinRoom({
-        roomId: id,
-        playerName,
-      });
+      joinRoom({ roomId: id, playerName });
+      console.log(`${playerName} joined room ${id}`);
+      setHasJoined(true);
     }
-  }, [id, playerName, roomQueryResult.data, joinRoom]);
+  }, [
+    id,
+    playerName,
+    roomQueryResult.data?.room,
+    roomQueryResult.data?.room?.players,
+    joinRoom,
+    hasJoined,
+  ]);
 
   const [_startGameMutationResult, startGame] = useMutation(StartGameMutation);
 
@@ -107,11 +121,15 @@ export const Room = ({ id }: { id: number }) => {
 
   return (
     <div>
+      <div className="configuration">
+        <RoomOptions id={id} />
+      </div>
+      <h2>Welcome to Room {id}</h2>
       <div>
         Players:
         <ol>
           {roomQueryResult.data.room?.players.map(({ name }) => {
-            return <li key={name}>{name}</li>;
+            return <li key={name}>{name === playerName ? `${name} (you)` : `${name}`}</li>;
           })}
         </ol>
       </div>
@@ -124,10 +142,9 @@ export const Room = ({ id }: { id: number }) => {
       <div>
         {gameStartedSubscriptionResult.data ? (
           <span>
-            {gameStartedSubscriptionResult.data.gameStarted?.__typename ===
-            "ImpostorInfo"
+            {gameStartedSubscriptionResult.data.gameStarted?.__typename === "ImpostorInfo"
               ? "Imposteur!"
-              : `Your word is ${gameStartedSubscriptionResult.data.gameStarted?.word}`}
+              : `Your word is "${gameStartedSubscriptionResult.data.gameStarted?.word}"`}
           </span>
         ) : null}
       </div>
