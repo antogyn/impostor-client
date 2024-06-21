@@ -145,33 +145,6 @@ export const Room = ({ id }: { id: number }) => {
               </li>
             );
           })}
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
-          <li>Toto</li>
         </ul>
       </div>
       <div>
