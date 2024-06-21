@@ -4,7 +4,6 @@ import { Router } from "../Router";
 import { Home } from "../Home/Home";
 import { Room } from "../Room/Room";
 import { SetName } from "../SetName/SetName";
-import ScreenSize from "../devComponent/ScreenSize";
 
 function App() {
   const route = Router.useRoute(["Home", "Room", "SetName"]);
@@ -50,7 +49,6 @@ function App() {
               .otherwise(() => (
                 <h1>Oops! Not found!</h1>
               ))}
-            <ScreenSize />
           </main>
         </div>
       </body>
