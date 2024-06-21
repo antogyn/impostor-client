@@ -1,4 +1,15 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
+@tailwind components;
+@tailwind utilities;
+
+h2 {
+  @apply text-2xl text-harvest-gold-700;
+}
+
+.room-option {
+  @apply bg-harvest-gold-200/70 p-6 rounded-lg border-solid border-[1px] border-summer-green-400/90 shadow-lg;
+}
+
+p {
+  @apply text-mortar-50;
+}
