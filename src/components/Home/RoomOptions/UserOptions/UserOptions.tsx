@@ -1,13 +1,10 @@
-import { type FormEvent, useContext, useState } from "react";
+import { useContext, useState, type FormEvent } from "react";
 import { NameContext } from "../../../../contexts/name-context";
-
 import { CreateRoomOption } from "../CreateRoomOption/CreateRoomOption";
 import { JoinRoomOption } from "../JoinRoomOption/JoinRoomOption";
-
 import { Button } from "../../../ui/button";
 import { Input } from "../../../ui/input";
-import { Separator } from "../../../ui/separator";
-import { Pen, Check, X } from "lucide-react";
+import { Check, Pen, X } from "lucide-react";
 
 export const UserOptions = () => {
   const [name, setName] = useContext(NameContext);
