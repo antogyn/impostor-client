@@ -4,9 +4,9 @@ import { NameContext } from "../../../../contexts/name-context";
 import { CreateRoomOption } from "../CreateRoomOption/CreateRoomOption";
 import { JoinRoomOption } from "../JoinRoomOption/JoinRoomOption";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "../../../ui/button";
+import { Input } from "../../../ui/input";
+import { Separator } from "../../../ui/separator";
 import { Pen, Check, X } from "lucide-react";
 
 export const UserOptions = () => {
@@ -25,37 +25,58 @@ export const UserOptions = () => {
   };
 
   return (
-    <section className="container flex flex-col items-center space-y-9">
-      <div className="greeting bg-slate flex space-x-3 bg-slate-400">
-        <p className="greeting text-2xl text-slate-50">Hello {name}!</p>
+    <section className="options-container flex flex-col h-full overflow-y-hidden">
+      <div className="user-option flex flex-col w-full h-[10%] space-x-6 items-center ">
         {!isEditingName && (
-          <button type="button" onClick={() => setIsEditingName(true)}>
-            <Pen />
-          </button>
+          <div className="flex space-x-3 items-center m-auto w-full justify-center">
+            <h2 className="greeting text-summer-green-600">
+              Hello <span className="">{name}</span>!
+            </h2>
+            <Button
+              type="button"
+              onClick={() => setIsEditingName(true)}
+              size="icon"
+              variant="ghost"
+            >
+              <Pen color="#3a6149" className="" />
+            </Button>
+          </div>
+        )}
+        {isEditingName && (
+          <div className="username-form-container flex m-auto" hidden={!isEditingName}>
+            <form onSubmit={handleEditingConfirmation} className="form flex space-x-3 m-auto">
+              <Input
+                type="text"
+                value={userInput}
+                id="name"
+                onChange={handleInputChange}
+                className="w-3/4"
+              />
+              <Button className="confirm-btn" type="submit" size="icon">
+                <Check />
+              </Button>
+              <Button
+                type="button"
+                className="cancel-btn"
+                onClick={() => setIsEditingName(false)}
+                size="icon"
+                variant="destructive"
+              >
+                <X />
+              </Button>
+            </form>
+          </div>
         )}
       </div>
-      {isEditingName && (
-        <div className="username-form-container" hidden={!isEditingName}>
-          <form onSubmit={handleEditingConfirmation} className="form flex space-x-3">
-            <Input type="text" value={userInput} id="name" onChange={handleInputChange} />
-            <Button className="confirm-btn" type="submit">
-              <Check />
-            </Button>
-            <Button type="button" className="cancel-btn" onClick={() => setIsEditingName(false)}>
-              <X />
-            </Button>
-          </form>
-        </div>
-      )}
-      <div className="options-container flex flex-col bg-slate-400 w-full space-y-9">
-        <div className="create-room-option flex flex-col bg-slate-700 w-full items-center space-y-3">
-          <h2 className="text-xl uppercase">Create a new room</h2>
+      <div className="room-options flex flex-col h-[90%] overflow-y-auto">
+        <div className="create-room-option flex flex-col h-[25%] w-full">
           <CreateRoomOption />
         </div>
-        <Separator />
-        <div className="join-room-option flex flex-col w-full items-center space-y-3 bg-slate-500">
-          <h2 className="text-xl uppercase">Join an existing Room</h2>
+        <div className="join-room-option flex flex-col h-[50%] w-full">
           <JoinRoomOption />
+        </div>
+        <div className="user-option-img-container flex h-[25%] justify-center">
+          <img src="/connection.svg" alt="" className="h-full" />
         </div>
       </div>
     </section>

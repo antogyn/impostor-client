@@ -127,22 +127,52 @@ export const Room = ({ id }: { id: number }) => {
 
   return (
     <main className="room-container flex flex-col items-center space-y-9 w-full">
-      <h1 className="text-4xl text-slate-200">Impostor Online Game</h1>
-      <h2 className="text-2xl text-slate-200">Welcome to Room {id}!</h2>
+      <h2 className="text-2xl text-summer-green-500">
+        Welcome to Room <span className="font-bold">{id}</span>!
+      </h2>
       <div className="configuration w-full">
         <RoomOptions id={id} />
       </div>
-      <div className="list-container flex flex-col w-full items-center space-y-6 py-3">
-        <p className="text-xl text-slate-100">Players:</p>
-        <ol className="list-content flex flex-col w-full items-center max-h-[500px] overflow-y-scroll text-slate-200">
+      <div className="list-container flex flex-col w-full items-center space-y-6 py-3 h-[300px] overflow-hidden bg-harvest-gold-200/70 p-6 rounded-lg border-solid border-[1px] border-summer-green-400/90 shadow-md">
+        <h2>Players:</h2>
+        <ul className="list-content flex flex-col w-full items-center max-h-[500px] overflow-y-auto no-scrollbar space-y-2">
           {playersList?.map((player) => {
             return (
-              <li key={player.name}>
-                {player.name === playerName ? `${player.name} (you)` : `${player.name}`}
+              <li key={player.name} className="">
+                <p className="text-summer-green-500">
+                  {player.name === playerName ? `${player.name} (you)` : `${player.name}`}
+                </p>
               </li>
             );
           })}
-        </ol>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+          <li>Toto</li>
+        </ul>
       </div>
       <div>
         <Button type="button" onClick={() => startGame({ roomId: id })}>
@@ -151,7 +181,7 @@ export const Room = ({ id }: { id: number }) => {
       </div>
 
       {gameHasStarted && (
-        <p className="text-slate-100 text-2xl">
+        <p className="text-2xl text-summer-green-700">
           {role === "ImpostorInfo"
             ? "You are the impostor! 🤫"
             : `The secret word is "${gameStartedSubscriptionResult.data?.gameStarted?.word}" 😎`}

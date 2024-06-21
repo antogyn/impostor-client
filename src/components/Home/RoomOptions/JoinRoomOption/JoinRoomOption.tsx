@@ -5,9 +5,9 @@ import { graphql } from "gql.tada";
 import { useMutation } from "urql";
 import { NameContext } from "../../../../contexts/name-context";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "../../../ui/button";
+import { Input } from "../../../ui/input";
+import { Label } from "../../../ui/label";
 
 const JoinRoomMutation = graphql(`
    mutation JoinRoom($roomId: Int!, $playerName: String!) {
@@ -41,21 +41,22 @@ export const JoinRoomOption = () => {
   };
 
   return (
-    <section className="join-room-form-container w-full">
+    <section className="join-room-form-container room-option flex flex-col w-full m-auto space-y-3 items-center">
+      <h2>Join Existing Room</h2>
       <form
         onSubmit={handleFormSubmit}
         className="join-room-form flex flex-col space-y-3 items-center"
       >
-        <Label className="form-label text-md text-slate-100">Enter Room ID</Label>
         <Input
           name="roomId"
           value={roomId}
           type=""
           onChange={handleInputChange}
-          placeholder="12345678"
+          placeholder="123456"
           maxLength={6}
+          className="w-3/4"
         />
-        <Button type="submit" className="submit-btn" disabled={!roomId}>
+        <Button type="submit" className="submit-btn" disabled={!roomId} size="lg">
           Join Room
         </Button>
       </form>

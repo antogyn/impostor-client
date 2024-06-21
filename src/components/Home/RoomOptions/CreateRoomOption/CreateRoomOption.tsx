@@ -34,8 +34,13 @@ export const CreateRoomOption = () => {
   }
 
   return (
-    <Button type="button" onClick={() => createRoom({ playerName: name })}>
-      Create room
-    </Button>
+    <section className="create-room room-option flex flex-col m-auto w-full full space-y-6 items-center">
+      <h2>Create New Room</h2>
+      <div className="create-room-btn-container w-full flex justify-center">
+        <Button type="button" onClick={() => createRoom({ playerName: name })} size="lg">
+          Create room
+        </Button>
+      </div>
+    </section>
   );
 };
