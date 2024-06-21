@@ -66,14 +66,11 @@ export const UserOptions = () => {
         )}
       </div>
       <div className="room-options flex flex-col h-[90%] overflow-y-auto">
-        <div className="create-room-option flex flex-col h-[25%] w-full">
+        <div className="create-room-option flex flex-col h-[30%] w-full">
           <CreateRoomOption />
         </div>
-        <div className="join-room-option flex flex-col h-[50%] w-full">
+        <div className="join-room-option flex flex-col h-[60%] w-full">
           <JoinRoomOption />
-        </div>
-        <div className="user-option-img-container flex h-[25%] justify-center">
-          <img src="/connection.svg" alt="" className="h-full" />
         </div>
       </div>
     </section>
