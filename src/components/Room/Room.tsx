@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useMutation, useQuery, useSubscription } from "urql";
 import { NameContext } from "../../contexts/name-context";
 import { Router } from "../Router";
-import { RoomOptions } from "./RoomOptions/RoomOptions";
+import { UserOptions } from "./UserOptions/UserOptions";
 
 import type { FormEvent } from "react";
 
@@ -180,53 +180,60 @@ export const Room = ({ id }: { id: number }) => {
 
   return (
     <main className="room-container flex flex-col items-center space-y-9 w-full">
-      <h2 className="text-2xl text-summer-green-500">
-        Welcome to Room <span className="font-bold">{id}</span>!
-      </h2>
-      <div className="configuration w-full">
-        <RoomOptions id={id} />
+      <div className="page-header ">
+        <h2 className="">
+          Welcome to Room <span className="font-bold">{id}</span>!
+        </h2>
+        <UserOptions id={id} />
       </div>
-      <div className="list-container flex flex-col w-full items-center space-y-6 py-3 h-[300px] overflow-hidden bg-harvest-gold-200/70 p-6 rounded-lg border-solid border-[1px] border-summer-green-400/90 shadow-md">
-        <h2>Players:</h2>
-        <ul className="list-content flex flex-col w-full items-center max-h-[500px] overflow-y-auto no-scrollbar space-y-2">
-          {playersList?.map((player) => {
-            return (
-              <li
-                key={player.name}
-                className="flex space-x-3 w-full bg-slate-100 items-center justify-center"
-              >
-                <p className="text-summer-green-500 flex">
-                  {player.name === playerName ? `${player.name} (you)` : `${player.name}`}
-                </p>
-                {player.name !== playerName && (
-                  <Button
-                    type="submit"
-                    className="flex"
-                    size="icon"
-                    variant="ghost"
-                    onClick={(e) => handleKickPlayerOut(e, player.name)}
-                  >
-                    <LucideX color="#b12737" />
-                  </Button>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div>
-        <Button type="button" onClick={() => startGame({ roomId: id })}>
-          Start Game
-        </Button>
-      </div>
+      <div className="page-content w-full space-y-6 border-t-[1.5px] border-pumpkin-200 p-6">
+        <div className="flex w-full">
+          <Button type="button" onClick={() => startGame({ roomId: id })} className="m-auto">
+            Start Game
+          </Button>
+        </div>
+        <div className="list-container flex flex-col w-[90%] m-auto items-center space-y-6 py-3 h-[350px] overflow-hidden p-6 ">
+          <h3>Players in the room:</h3>
+          <ul className="list-content flex flex-col w-full items-center max-h-[500px] overflow-y-auto no-scrollbar space-y-2">
+            {playersList?.map((player) => {
+              return (
+                <li key={player.name} className="flex space-x-2 w-full items-center justify-center">
+                  <p className="flex">
+                    {player.name === playerName ? `${player.name} (you)` : `${player.name}`}
+                  </p>
+                  {player.name !== playerName && (
+                    <Button
+                      type="submit"
+                      className="flex"
+                      size="icon"
+                      variant="ghost"
+                      onClick={(e) => handleKickPlayerOut(e, player.name)}
+                    >
+                      <LucideX color="#b12737" />
+                    </Button>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
 
-      {gameHasStarted && (
-        <p className="text-2xl text-summer-green-700">
-          {role === "ImpostorInfo"
-            ? "You are the impostor! 🤫"
-            : `The secret word is "${gameStartedSubscriptionResult.data?.gameStarted?.word}" 😎`}
-        </p>
-      )}
+        {gameHasStarted && (
+          <p className="text-xl m-auto flex">
+            {role === "ImpostorInfo" ? (
+              "You are the impostor! 🤫"
+            ) : (
+              <>
+                The secret word is "
+                <span className="text-pumpkin-500">
+                  {gameStartedSubscriptionResult.data?.gameStarted?.word}
+                </span>
+                " 😎
+              </>
+            )}
+          </p>
+        )}
+      </div>
     </main>
   );
 };

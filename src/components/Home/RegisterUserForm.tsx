@@ -4,8 +4,10 @@ import { useContext } from "react";
 import { NameContext } from "../../contexts/name-context";
 
 import { Button } from "../../components/ui/button";
+
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
+import { ChevronRight } from "lucide-react";
 
 export const RegisterUserForm = () => {
   const [userInput, setUserInput] = useState<string>("");
@@ -22,30 +24,27 @@ export const RegisterUserForm = () => {
   };
 
   return (
-    <section className="username-form-container flex flex-col w-full h-full m-auto">
-      <div className="form-container flex h-2/4 w-full m-auto">
-        <form
-          onSubmit={handleFormSubmit}
-          className="flex flex-col space-y-6 items-center h-2/4 w-3/4 m-auto"
-        >
-          <Label className="form-label text-xl text-summer-green-500">Enter your name</Label>
-          <Input
-            name="userName"
-            value={userInput}
-            onChange={handleInputChange}
-            placeholder="John"
-            className="w-3/4"
-          />
-          <Button type="submit" disabled={!userInput}>
-            Next
-          </Button>
-        </form>
+    <section className="username-form-container flex flex-col w-full h-3/4 m-auto">
+      <div className="username-form-header flex flex-col m-auto space-y-3">
+        <h2>Welcome! 👋</h2>
+        <p className="text-md">Tell us more about you!</p>
       </div>
-
-      <div className="img-container flex h-2/4 m-auto">
-        {/* <img src="/connection.svg" alt="Two people exchanging text messages" /> */}
-        <img src="/no-data.svg" alt="Empty writing boards" className="h-3/4" />
-      </div>
+      <form
+        onSubmit={handleFormSubmit}
+        className="flex flex-col space-y-6 items-center w-3/4 m-auto justify-center"
+      >
+        <Label className="form-label text-lg text-pumpkin-300">What is your name?</Label>
+        <Input
+          name="userName"
+          value={userInput}
+          onChange={handleInputChange}
+          placeholder="Enter your name..."
+          className=""
+        />
+        <Button type="submit" disabled={!userInput} className="flex">
+          Next <ChevronRight className="ml-3" />
+        </Button>
+      </form>
     </section>
   );
 };

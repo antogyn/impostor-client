@@ -4,16 +4,17 @@ import { Router } from "../Router";
 import { Home } from "../Home/Home";
 import { Room } from "../Room/Room";
 import { SetName } from "../SetName/SetName";
+// import ScreenSize from "../devComponent/ScreenSize";
 
 function App() {
   const route = Router.useRoute(["Home", "Room", "SetName"]);
 
   return (
     <AppContextsProvider>
-      <body className="app flex flex-col bg-[url('/background-light.svg')] h-[100vh] w-[100vw] p-3">
-        <div className="responsive-content flex flex-col h-full w-full sm:max-w-[640px] sm:max-h-[800px] sm:m-auto">
+      <body className="app flex flex-col bg-[url('/background/background.svg')] h-[100vh] w-[100vw] p-3">
+        <div className="responsive-content flex flex-col h-full w-full sm:max-w-[640px] sm:max-h-[700px] m-auto">
           <header className="header flex flex-col h-[15vh] items-center justify-center">
-            <svg fill="#3a6149" height="50%" viewBox="0 0 612 792">
+            <svg fill="#fd7014" height="50%" viewBox="0 0 612 792">
               <title>Masquerade Icon</title>
               <path
                 d="M557.987,241.457c-17.762-32.593-37.158-48.438-59.296-48.438c-34.312,0-61.109,39.384-84.761,74.146
@@ -35,7 +36,8 @@ function App() {
                 className=""
               />
             </svg>
-            <h1 className="text-3xl text-harvest-gold-800">• Impostor Online Game •</h1>
+            <h1 className="app-title">•&nbsp;Impostor&nbsp;•</h1>
+            <p className="app-subtitle text-lg">Online Game</p>
           </header>
           <main className="body flex flex-col h-[85vh]">
             {match(route)
@@ -47,9 +49,10 @@ function App() {
                 <SetName id={Number.parseInt(params.roomId, 10)} />
               ))
               .otherwise(() => (
-                <h1>Oops! Not found!</h1>
+                <h1 className="m-auto">Oops! Not found!</h1>
               ))}
           </main>
+          {/* <ScreenSize /> */}
         </div>
       </body>
     </AppContextsProvider>

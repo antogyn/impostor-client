@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { NameContext } from "../../contexts/name-context";
-import { UserOptions } from "./RoomOptions/UserOptions/UserOptions";
+import { RoomOptions } from "./RoomOptions/RoomOptions";
 import { RegisterUserForm } from "./RegisterUserForm";
 
 export const Home = () => {
@@ -8,7 +8,7 @@ export const Home = () => {
 
   return (
     <main className="home-container flex flex-col space-y-9 w-full h-full">
-      {name ? <UserOptions /> : <RegisterUserForm />}
+      {name ? <RoomOptions /> : <RegisterUserForm />}
     </main>
   );
 };
