@@ -2,8 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+h1 {
+  @apply text-4xl text-gallery-200;
+}
+
 h2 {
-  @apply text-2xl text-harvest-gold-700;
+  @apply text-2xl text-pumpkin-500 m-auto;
+}
+
+h3 {
+  @apply text-xl text-pumpkin-300;
 }
 
 .room-option {
@@ -11,7 +19,15 @@ h2 {
 }
 
 p {
-  @apply text-mortar-50;
+  @apply text-gallery-200;
+}
+
+.page-header {
+  @apply flex flex-col w-full h-[30%] items-center;
+}
+
+.page-content {
+  @apply flex flex-col h-[70%] overflow-y-scroll;
 }
 
 @layer utilities {
