@@ -14,10 +14,6 @@ h3 {
   @apply text-xl text-pumpkin-300;
 }
 
-.room-option {
-  @apply bg-harvest-gold-200/70 p-6 rounded-lg border-solid border-[1px] border-summer-green-400/90 shadow-lg;
-}
-
 p {
   @apply text-gallery-200;
 }
@@ -27,7 +23,7 @@ p {
 }
 
 .page-content {
-  @apply flex flex-col h-[70%] overflow-y-scroll;
+  @apply flex flex-col h-[70%];
 }
 
 @layer utilities {
