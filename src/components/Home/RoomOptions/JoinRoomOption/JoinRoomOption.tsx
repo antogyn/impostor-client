@@ -32,7 +32,7 @@ export const JoinRoomOption = () => {
     e.preventDefault();
     const roomIdNumber = Number.parseInt(roomId, 10);
     joinRoom({ roomId: roomIdNumber, playerName: name }).then(() => {
-      Router.push("Room", { roomId });
+      Router.replace("Room", { roomId });
     });
     if (joinRoomResult.fetching) {
       return <div>Joining room...</div>;
