@@ -40,12 +40,13 @@ export const RoomOptions = ({ id }: RoomProps) => {
     });
   };
 
-  const handleLeaveRoom = (e: FormEvent) => {
+  const handleLeaveRoom = async (e: FormEvent) => {
     e.preventDefault();
-    leaveRoom({ roomId: id, playerName: name });
-    console.log(`User ${name} left room ${id}`);
-    Router.push("Home");
-    return;
+    const result = await leaveRoom({ roomId: id, playerName: name });
+    if (result.data?.leaveRoom) {
+      console.log("Query results:", result.data?.leaveRoom, `User ${name} left room ${id}`);
+      Router.replace("Home");
+    }
   };
 
   return (
