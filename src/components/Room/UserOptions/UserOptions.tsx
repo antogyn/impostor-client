@@ -8,7 +8,7 @@ import { Router } from "../../Router";
 import "react-toastify/dist/ReactToastify.css";
 
 import { Button } from "../../ui/button";
-import { DoorOpen, Users, Copy, QrCode, QrCodeIcon } from "lucide-react";
+import { DoorOpen, Users, Copy, QrCodeIcon } from "lucide-react";
 
 import QRCode from "react-qr-code";
 
