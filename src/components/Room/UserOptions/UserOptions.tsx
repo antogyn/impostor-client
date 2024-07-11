@@ -58,8 +58,14 @@ export const UserOptions = ({ id }: RoomProps) => {
     e.preventDefault();
     const result = await leaveRoom({ roomId: id, playerName: name });
     if (result.data?.leaveRoom) {
+      const playersRemaining = result.data.leaveRoom.players;
       console.log("Query results:", result.data?.leaveRoom, `User ${name} left room ${id}`);
-      Router.replace("Home");
+      if (playersRemaining.length === 0) {
+        console.log("No players left in the room, redirecting...");
+        Router.push("Home");
+      } else {
+        console.log(`${playersRemaining.length} players left in room`);
+      }
     }
   };
 
