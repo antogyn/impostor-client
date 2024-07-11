@@ -18,6 +18,10 @@ p {
   @apply text-gallery-200;
 }
 
+.active-locale-btn {
+  @apply bg-pumpkin-300;
+}
+
 .page-header {
   @apply flex flex-col w-full h-[30%] items-center;
 }
