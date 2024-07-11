@@ -31,6 +31,8 @@
   "room.dialog.or-option": "ou",
   "room.greeting": "Bienvenue dans la salle {{id}}\u00a0!",
   "room.game-starting-soon": "{{firstPlayer}} va bientôt démarrer le jeu\u00a0!",
+  "room.game.impostor": "Vous êtes l\u2019imposteur\u00a0!",
+  "room.game.secret-word": "Le mot secret est \u00ab\u00a0{{secretWord}}\u00a0\u00bb",
   "room.players-in-room": "Joueurs présents\u00a0:",
   "setName.greeting": "Bienvenue dans la salle {{id}}\u00a0!",
   "toaster.copied-to-clipboard": "Lien copié dans le presse-papiers\u00a0!"
