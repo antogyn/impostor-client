@@ -34,7 +34,7 @@
   "room.game-starting-soon": "{{firstPlayer}} will start the game soon!",
   "room.game.impostor": "You are the impostor!",
   "room.game.secret-word": "The secret word is \"{{secretWord}}\"",
-  "room.players-in-room": "Playeres in room:",
+  "room.players-in-room": "Players in room:",
   "setName.greeting": "Welcome to Room {{id}}!",
   "toaster.copied-to-clipboard": "Link copied to clipboard!"
 }
