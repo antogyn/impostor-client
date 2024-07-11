@@ -9,6 +9,8 @@ import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import { Check, Pen, X } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
+
 const CreateRoomMutation = graphql(`
   mutation CreateRoom($playerName: String!) {
     createRoom(playerName: $playerName, language: fr) {
@@ -32,6 +34,8 @@ const JoinRoomMutation = graphql(`
  `);
 
 export const RoomOptions = () => {
+  const { t } = useTranslation();
+
   const [name, setName] = useContext(NameContext);
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
 
@@ -97,16 +101,14 @@ export const RoomOptions = () => {
       <div className="page-header">
         {!isEditingName && (
           <div className="flex flex-col space-y-6 items-center m-auto w-full justify-center">
-            <h2 className="greeting">
-              Hello <span className="username">{name}</span>! 👋
-            </h2>
+            <h2 className="greeting">{t("home.greeting", { name })} 👋</h2>
             <Button
               type="button"
               onClick={() => setIsEditingName(true)}
               variant="secondary"
               size="sm"
             >
-              Edit name
+              {t("button.edit-name")}
               <Pen color="#cad2d7" className="ml-3" size={18} />
             </Button>
           </div>
@@ -138,7 +140,7 @@ export const RoomOptions = () => {
         )}
       </div>
       <div className="page-content">
-        <p className="text-lg self-center">What would you like to do?</p>
+        <p className="text-lg self-center">{t("home.what-to-do")}</p>
         <div className="create-room-option flex flex-col space-y-12 m-auto">
           {isFormVisible ? (
             <>
@@ -155,18 +157,20 @@ export const RoomOptions = () => {
                 >
                   <X color="#cad2d7" />
                 </Button>
-                <Label className="form-label text-lg text-pumpkin-300">Enter room ID</Label>
+                <Label className="form-label text-lg text-pumpkin-300">
+                  {t("form.join-room.label")}
+                </Label>
                 <div className="flex w-full items-center justify-evenly">
                   <Input
                     name="roomId"
                     value={roomId}
                     onChange={handleRoomNumberChange}
-                    placeholder="123456"
+                    placeholder={t("form.join-room.input.placeholder")}
                     maxLength={6}
                     className="w-2/4"
                   />
                   <Button type="submit" className="submit-btn" disabled={!roomId} size="lg">
-                    Join
+                    {t("button.join")}
                   </Button>
                 </div>
               </form>
@@ -174,10 +178,10 @@ export const RoomOptions = () => {
           ) : (
             <>
               <Button type="submit" onClick={handleCreateRoom} size="lg">
-                Create room
+                {t("button.create-room")}
               </Button>
               <Button type="button" onClick={() => setIsFormVisible(true)}>
-                Join room
+                {t("button.join-room")}
               </Button>
             </>
           )}

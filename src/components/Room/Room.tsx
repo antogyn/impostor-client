@@ -8,8 +8,9 @@ import { UserOptions } from "./UserOptions/UserOptions";
 import type { FormEvent } from "react";
 
 import { Button } from "../ui/button";
-
 import { LucideX, CirclePlay } from "lucide-react";
+
+import { useTranslation } from "react-i18next";
 
 import {
   AlertDialog,
@@ -92,6 +93,7 @@ interface Player {
 }
 
 export const Room = ({ id }: { id: number }) => {
+  const { t } = useTranslation();
   const [playerName] = useContext(NameContext);
 
   const [roomQueryResult, _reexecuteQuery] = useQuery({
@@ -164,7 +166,7 @@ export const Room = ({ id }: { id: number }) => {
   }, [roomUpdatedSubscriptionResult.data, playerName]);
 
   if (roomQueryResult.fetching) {
-    return <div>Loading...</div>;
+    return <div>{t("loading")}</div>;
   }
 
   if (!roomQueryResult.data) {
@@ -177,6 +179,10 @@ export const Room = ({ id }: { id: number }) => {
   const gameCanStart = playersList && playersList.length >= 2;
   const gameHasStarted = gameStartedSubscriptionResult.data;
   const role = gameStartedSubscriptionResult.data?.gameStarted?.__typename;
+  const secretWord =
+    gameStartedSubscriptionResult.data?.gameStarted?.__typename === "RegularInfo"
+      ? gameStartedSubscriptionResult.data?.gameStarted?.word
+      : null;
 
   const handleKickPlayerOut = async (e: FormEvent, selectedPlayer: string) => {
     e.preventDefault();
@@ -196,9 +202,7 @@ export const Room = ({ id }: { id: number }) => {
   return (
     <main className="room-container flex flex-col items-center space-y-9 w-full">
       <div className="page-header ">
-        <h2 className="">
-          Welcome to Room <span className="font-bold">{id}</span>!
-        </h2>
+        <h2 className="">{t("room.greeting", { id })}</h2>
         <UserOptions id={id} />
       </div>
       <div className="page-content w-full space-y-6 border-t-[1.5px] border-pumpkin-200 p-6">
@@ -210,22 +214,22 @@ export const Room = ({ id }: { id: number }) => {
               disabled={!gameCanStart}
               className="m-auto"
             >
-              Start Game <CirclePlay className="ml-3" size={24} />
+              {t("button.start-game")} <CirclePlay className="ml-3" size={24} />
             </Button>
           ) : (
-            <p className="text-sm m-auto">
-              <span className="text-pumpkin-300">{firstPlayer}</span> will start the game soon! 🏁
-            </p>
+            <p className="text-sm m-auto">{t("room.game-starting-soon", { firstPlayer })} 🏁</p>
           )}
         </div>
         <div className="list-container flex flex-col w-[90%] m-auto items-center space-y-6 py-3 h-[350px] overflow-hidden p-6 ">
-          <h3>Players in the room:</h3>
+          <h3>{t("room.players-in-room")}</h3>
           <ul className="list-content flex flex-col w-full items-center max-h-[500px] overflow-y-auto no-scrollbar space-y-2">
             {playersList?.map((player) => {
               return (
                 <li key={player.name} className="flex space-x-2 w-full items-center justify-center">
                   <p className="flex">
-                    {player.name === playerName ? `${player.name} (you)` : `${player.name}`}
+                    {player.name === playerName
+                      ? `${player.name} (${t("room.current-player")})`
+                      : `${player.name}`}
                   </p>
                   {player.name !== playerName && (
                     <AlertDialog>
@@ -234,19 +238,18 @@ export const Room = ({ id }: { id: number }) => {
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
-                          <AlertDialogTitle>Wait a minute!</AlertDialogTitle>
+                          <AlertDialogTitle>{t("room.alert-dialog.title")}</AlertDialogTitle>
                           <AlertDialogDescription>
-                            You are about to kick {player.name} out of the room. Confirm this
-                            action?
+                            {t("room.alert-dialog.content", { player: player.name })}
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogCancel>{t("button.cancel")}</AlertDialogCancel>
                           <AlertDialogAction
                             type="button"
                             onClick={(e) => handleKickPlayerOut(e, player.name)}
                           >
-                            Confirm
+                            {t("button.confirm")}
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
@@ -260,17 +263,9 @@ export const Room = ({ id }: { id: number }) => {
 
         {gameHasStarted && (
           <p className="text-xl m-auto flex">
-            {role === "ImpostorInfo" ? (
-              "You are the impostor! 🤫"
-            ) : (
-              <>
-                The secret word is "
-                <span className="text-pumpkin-500">
-                  {gameStartedSubscriptionResult.data?.gameStarted?.word}
-                </span>
-                " 😎
-              </>
-            )}
+            {role === "ImpostorInfo"
+              ? `${t("room.game.impostor")} 🤫`
+              : `${t("room.game.secret-word", { secretWord })} 😎`}
           </p>
         )}
       </div>
