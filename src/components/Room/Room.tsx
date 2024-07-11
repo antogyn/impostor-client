@@ -162,6 +162,7 @@ export const Room = ({ id }: { id: number }) => {
   const playersList = roomQueryResult.data.room?.players;
   const firstPlayer = roomQueryResult.data.room?.players[0].name;
   const isFirstPlayer = playerName === firstPlayer;
+  const gameCanStart = playersList && playersList.length >= 2;
   const gameHasStarted = gameStartedSubscriptionResult.data;
   const role = gameStartedSubscriptionResult.data?.gameStarted?.__typename;
 
@@ -191,7 +192,12 @@ export const Room = ({ id }: { id: number }) => {
       <div className="page-content w-full space-y-6 border-t-[1.5px] border-pumpkin-200 p-6">
         <div className="flex w-full">
           {isFirstPlayer ? (
-            <Button type="button" onClick={() => startGame({ roomId: id })} className="m-auto">
+            <Button
+              type="button"
+              onClick={() => startGame({ roomId: id })}
+              disabled={!gameCanStart}
+              className="m-auto"
+            >
               Start Game <CirclePlay className="ml-3" size={24} />
             </Button>
           ) : (
