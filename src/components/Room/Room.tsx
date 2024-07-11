@@ -160,6 +160,8 @@ export const Room = ({ id }: { id: number }) => {
   }
 
   const playersList = roomQueryResult.data.room?.players;
+  const firstPlayer = roomQueryResult.data.room?.players[0].name;
+  const isFirstPlayer = playerName === firstPlayer;
   const gameHasStarted = gameStartedSubscriptionResult.data;
   const role = gameStartedSubscriptionResult.data?.gameStarted?.__typename;
 
@@ -188,9 +190,15 @@ export const Room = ({ id }: { id: number }) => {
       </div>
       <div className="page-content w-full space-y-6 border-t-[1.5px] border-pumpkin-200 p-6">
         <div className="flex w-full">
-          <Button type="button" onClick={() => startGame({ roomId: id })} className="m-auto">
-            Start Game
-          </Button>
+          {isFirstPlayer ? (
+            <Button type="button" onClick={() => startGame({ roomId: id })} className="m-auto">
+              Start Game
+            </Button>
+          ) : (
+            <p className="text-sm m-auto">
+              <span className="text-pumpkin-300">{firstPlayer}</span> will start the game soon! 🏁
+            </p>
+          )}
         </div>
         <div className="list-container flex flex-col w-[90%] m-auto items-center space-y-6 py-3 h-[350px] overflow-hidden p-6 ">
           <h3>Players in the room:</h3>
