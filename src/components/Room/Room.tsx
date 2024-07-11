@@ -9,7 +9,7 @@ import type { FormEvent } from "react";
 
 import { Button } from "../ui/button";
 
-import { LucideX } from "lucide-react";
+import { LucideX, CirclePlay } from "lucide-react";
 
 const RoomQuery = graphql(`
   query RoomById($id: Int!) {
@@ -192,7 +192,7 @@ export const Room = ({ id }: { id: number }) => {
         <div className="flex w-full">
           {isFirstPlayer ? (
             <Button type="button" onClick={() => startGame({ roomId: id })} className="m-auto">
-              Start Game
+              Start Game <CirclePlay className="ml-3" size={24} />
             </Button>
           ) : (
             <p className="text-sm m-auto">
