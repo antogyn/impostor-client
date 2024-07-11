@@ -11,6 +11,18 @@ import { Button } from "../ui/button";
 
 import { LucideX, CirclePlay } from "lucide-react";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 const RoomQuery = graphql(`
   query RoomById($id: Int!) {
     room(id: $id) {
@@ -216,15 +228,29 @@ export const Room = ({ id }: { id: number }) => {
                     {player.name === playerName ? `${player.name} (you)` : `${player.name}`}
                   </p>
                   {player.name !== playerName && (
-                    <Button
-                      type="submit"
-                      className="flex"
-                      size="icon"
-                      variant="ghost"
-                      onClick={(e) => handleKickPlayerOut(e, player.name)}
-                    >
-                      <LucideX color="#b12737" />
-                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger>
+                        <LucideX color="#b12737" />
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Wait a minute!</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            You are about to kick {player.name} out of the room. Confirm this
+                            action?
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            type="button"
+                            onClick={(e) => handleKickPlayerOut(e, player.name)}
+                          >
+                            Confirm
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   )}
                 </li>
               );
