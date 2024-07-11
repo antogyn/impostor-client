@@ -32,24 +32,6 @@ export const SetName = ({ id }: RoomProps) => {
         <h2 className="m-auto">
           Welcome to Room <span className="font-bold">{id}</span>!
         </h2>
-        {/* <form
-          onSubmit={handleFormSubmit}
-          className="flex flex-col space-y-6 items-center h-2/4 w-3/4 m-auto"
-        >
-          <Label className="form-label text-xl text-summer-green-500">
-            Please enter your name first!
-          </Label>
-          <Input
-            name="userName"
-            value={userInput}
-            onChange={handleInputChange}
-            placeholder="John"
-            className="w-3/4"
-          />
-          <Button type="submit" disabled={!userInput}>
-            Join Room
-          </Button>
-        </form> */}
         <form
           onSubmit={handleFormSubmit}
           className="flex flex-col space-y-6 items-center w-3/4 m-auto justify-center"
