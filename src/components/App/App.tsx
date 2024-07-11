@@ -4,16 +4,21 @@ import { Router } from "../Router";
 import { Home } from "../Home/Home";
 import { Room } from "../Room/Room";
 import { SetName } from "../SetName/SetName";
+import { useTranslation } from "react-i18next";
+
+import { LocaleSelector } from "./LocaleSelector/LocaleSelector";
 // import ScreenSize from "../devComponent/ScreenSize";
 
 function App() {
   const route = Router.useRoute(["Home", "Room", "SetName"]);
+  const { t } = useTranslation();
 
   return (
     <AppContextsProvider>
       <body className="app flex flex-col bg-[url('/background/background.svg')] h-[100vh] w-[100vw] p-3">
         <div className="responsive-content flex flex-col h-full w-full sm:max-w-[640px] sm:max-h-[700px] m-auto">
           <header className="header flex flex-col h-[15vh] items-center justify-center">
+            <LocaleSelector />
             <svg fill="#fd7014" height="50%" viewBox="0 0 612 792">
               <title>Masquerade Icon</title>
               <path
@@ -36,8 +41,8 @@ function App() {
                 className=""
               />
             </svg>
-            <h1 className="app-title">•&nbsp;Impostor&nbsp;•</h1>
-            <p className="app-subtitle text-lg">Online Game</p>
+            <h1 className="app-title">•&nbsp;{t("app.title")}&nbsp;•</h1>
+            <p className="app-subtitle text-lg">{t("app.subtitle")}</p>
           </header>
           <main className="body flex flex-col h-[85vh]">
             {match(route)
