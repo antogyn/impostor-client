@@ -173,8 +173,8 @@ export const Room = ({ id }: { id: number }) => {
     return;
   }
 
-  const playersList = roomQueryResult.data.room?.players;
-  const firstPlayer = roomQueryResult.data.room?.players[0].name;
+  const playersList = roomQueryResult.data.room?.players || [];
+  const firstPlayer = playersList.length > 0 ? playersList[0].name : null;
   const isFirstPlayer = playerName === firstPlayer;
   const gameCanStart = playersList && playersList.length >= 2;
   const gameHasStarted = gameStartedSubscriptionResult.data;
