@@ -1,13 +1,13 @@
+import { graphql } from "gql.tada";
 import { useContext, useState, type FormEvent } from "react";
 import { useMutation } from "urql";
 import { NameContext } from "../../../contexts/name-context";
 import { Router } from "../../Router";
-import { graphql } from "gql.tada";
 
+import { Check, Pen, X } from "lucide-react";
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
-import { Check, Pen, X } from "lucide-react";
 
 import { useTranslation } from "react-i18next";
 
@@ -16,7 +16,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
