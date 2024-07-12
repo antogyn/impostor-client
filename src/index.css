@@ -14,8 +14,12 @@ h3 {
   @apply text-xl text-pumpkin-300;
 }
 
+h4 {
+  @apply text-xl font-semibold text-gallery-400;
+}
+
 p {
-  @apply text-gallery-200;
+  @apply text-gallery-200 text-sm;
 }
 
 .active-locale-btn {
