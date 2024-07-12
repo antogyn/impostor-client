@@ -56,6 +56,7 @@ const GameStartedSubscription = graphql(`
       __typename
       ... on RegularInfo {
         word
+        isFirstPlayer
       }
     }
   }
@@ -105,6 +106,7 @@ export const Room = ({ id }: { id: number }) => {
     },
     pause: id === null,
   });
+  const gameLocale = roomQueryResult.data?.room?.language;
 
   const [_joinRoomResult, joinRoom] = useMutation(JoinRoomMutation);
   const [_startGameMutationResult, startGame] = useMutation(StartGameMutation);
@@ -175,10 +177,9 @@ export const Room = ({ id }: { id: number }) => {
     return;
   }
 
-  const gameLocale = roomQueryResult.data.room?.language;
   const playersList = roomQueryResult.data.room?.players || [];
-  const firstPlayer = playersList.length > 0 ? playersList[0].name : null;
-  const isFirstPlayerInRoom = playerName === firstPlayer;
+  const firstPlayerInRoom = playersList.length > 0 ? playersList[0].name : null;
+  const isfirstPlayerInRoom = playerName === firstPlayerInRoom;
   const gameCanStart = playersList && playersList.length >= 2;
   const gameHasStarted = gameStartedSubscriptionResult.data;
   const role = gameStartedSubscriptionResult.data?.gameStarted?.__typename;
@@ -186,6 +187,10 @@ export const Room = ({ id }: { id: number }) => {
     gameStartedSubscriptionResult.data?.gameStarted?.__typename === "RegularInfo"
       ? gameStartedSubscriptionResult.data?.gameStarted?.word
       : null;
+  const isFirstToPlay =
+    gameStartedSubscriptionResult.data?.gameStarted?.__typename === "RegularInfo"
+      ? gameStartedSubscriptionResult.data?.gameStarted?.isFirstPlayer
+      : false;
 
   const handleKickPlayerOut = async (e: FormEvent, selectedPlayer: string) => {
     e.preventDefault();
@@ -216,7 +221,7 @@ export const Room = ({ id }: { id: number }) => {
               ? t("room.game.selected-locale.fr")
               : t("room.game.selected-locale.en")}
           </p>
-          {isFirstPlayerInRoom ? (
+          {isfirstPlayerInRoom ? (
             <Button
               type="button"
               onClick={() => startGame({ roomId: id })}
@@ -227,7 +232,9 @@ export const Room = ({ id }: { id: number }) => {
             </Button>
           ) : (
             <div className="flex space-x-3">
-              <p className="text-sm m-auto">{t("room.game-starting-soon", { firstPlayer })}</p>
+              <p className="text-sm m-auto">
+                {t("room.game-starting-soon", { firstPlayer: firstPlayerInRoom })}
+              </p>
               <RotatingLines
                 visible={true}
                 width="30"
@@ -279,14 +286,22 @@ export const Room = ({ id }: { id: number }) => {
             })}
           </ul>
         </div>
-
-        {gameHasStarted && (
-          <p className="text-xl m-auto flex">
-            {role === "ImpostorInfo"
-              ? `${t("room.game.impostor")} 🤫`
-              : `${t("room.game.secret-word", { secretWord })} 😎`}
-          </p>
-        )}
+        <div className="game-data flex flex-col items-center">
+          {gameHasStarted && (
+            <>
+              {role === "ImpostorInfo" ? (
+                <p className="text-xl m-auto flex">{t("room.game.impostor")} 🤫</p>
+              ) : (
+                <p className="text-xl m-auto flex text-center">
+                  {t("room.game.secret-word-is")} {t("room.game.secret-word", { secretWord })} 🙊
+                </p>
+              )}
+              {isFirstToPlay && (
+                <p className="text-sm m-auto flex text-center">{t("room.game.you-start")}</p>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </main>
   );
