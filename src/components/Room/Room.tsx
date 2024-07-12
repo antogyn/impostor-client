@@ -178,8 +178,8 @@ export const Room = ({ id }: { id: number }) => {
   }
 
   const playersList = roomQueryResult.data.room?.players || [];
-  const firstPlayerInRoom = playersList.length > 0 ? playersList[0].name : null;
-  const isfirstPlayerInRoom = playerName === firstPlayerInRoom;
+  const gameMaster = playersList.length > 0 ? playersList[0].name : null;
+  const isGameMaster = playerName === gameMaster;
   const gameCanStart = playersList && playersList.length >= 2;
   const gameHasStarted = gameStartedSubscriptionResult.data;
   const role = gameStartedSubscriptionResult.data?.gameStarted?.__typename;
@@ -221,7 +221,7 @@ export const Room = ({ id }: { id: number }) => {
               ? t("room.game.selected-locale.fr")
               : t("room.game.selected-locale.en")}
           </p>
-          {isfirstPlayerInRoom ? (
+          {isGameMaster ? (
             <Button
               type="button"
               onClick={() => startGame({ roomId: id })}
@@ -232,9 +232,7 @@ export const Room = ({ id }: { id: number }) => {
             </Button>
           ) : (
             <div className="flex space-x-3">
-              <p className="text-sm m-auto">
-                {t("room.game-starting-soon", { firstPlayer: firstPlayerInRoom })}
-              </p>
+              <p className="text-sm m-auto">{t("room.game-starting-soon", { gameMaster })}</p>
               <RotatingLines
                 visible={true}
                 width="30"
