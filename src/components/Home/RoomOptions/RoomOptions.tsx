@@ -11,13 +11,24 @@ import { Check, Pen, X } from "lucide-react";
 
 import { useTranslation } from "react-i18next";
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 const CreateRoomMutation = graphql(`
-  mutation CreateRoom($playerName: String!) {
-    createRoom(playerName: $playerName, language: fr) {
+  mutation CreateRoom($playerName: String!, $language: Language!) {
+    createRoom(playerName: $playerName, language: $language) {
       id
       players {
         name
-      }
+      },
+      language
     }
   }
 `);
@@ -35,47 +46,66 @@ const JoinRoomMutation = graphql(`
 
 export const RoomOptions = () => {
   const { t } = useTranslation();
-
   const [name, setName] = useContext(NameContext);
-  const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
 
   const [createRoomResult, createRoom] = useMutation(CreateRoomMutation);
   const [joinRoomResult, joinRoom] = useMutation(JoinRoomMutation);
 
+  /* Handling user name update */
   const [userInput, setUserInput] = useState<string>(name);
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
-  const [roomId, setRoomId] = useState("");
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value);
   };
-
   const handleEditingConfirmation = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setName(userInput);
     setIsEditingName(false);
   };
 
-  const handleRoomNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  /* Handling create room feature */
+  const [isCreateRoomFormVisible, setIsCreateRoomFormVisible] = useState<boolean>(false);
+  const [selectedLocale, setSelectedLocale] = useState<string | null>(null);
+
+  const handleOpenCreateRoomForm = () => {
+    setIsJoinRoomFormVisible(false);
+    setIsCreateRoomFormVisible(true);
+  };
+
+  const handleSelectedLocaleChange = (locale: "en" | "fr") => {
+    setSelectedLocale(locale);
+  };
+
+  const handleCreateRoomFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!selectedLocale) return;
+    const localeIsValid = selectedLocale === "en" || selectedLocale === "fr";
+    if (localeIsValid) {
+      const result = await createRoom({ playerName: name, language: selectedLocale });
+      if (result.data?.createRoom) {
+        setSelectedLocale(null);
+        console.log(`Room successfully created: ${result.data.createRoom.id}`);
+        Router.push("Room", { roomId: result.data.createRoom.id.toString() });
+      }
+    }
+    if (createRoomResult.fetching) {
+      return <div>Creating room...</div>;
+    }
+    return;
+  };
+
+  /* Handling join room feature */
+  const [roomId, setRoomId] = useState("");
+  const [isJoinRoomFormVisible, setIsJoinRoomFormVisible] = useState<boolean>(false);
+
+  const handleOpenJoinRoomForm = () => {
+    setIsJoinRoomFormVisible(true);
+    setIsCreateRoomFormVisible(false);
+  };
+
+  const handleRoomIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRoomId(e.target.value);
   };
-
-  const handleCloseForm = () => {
-    setRoomId("");
-    setIsFormVisible(false);
-  };
-
-  if (createRoomResult.fetching) {
-    return <div>Creating room...</div>;
-  }
-  if (createRoomResult.data?.createRoom) {
-    console.log(createRoomResult.data);
-    Router.push("Room", {
-      roomId: createRoomResult.data.createRoom.id.toString(),
-    });
-    return;
-  }
-
   const handleJoinRoomFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const roomIdNumber = Number.parseInt(roomId, 10);
@@ -84,16 +114,15 @@ export const RoomOptions = () => {
       Router.push("Room", { roomId });
     }
     if (joinRoomResult.fetching) {
-      return <div>Joining room...</div>;
+      return <div>{t("joining-room")}</div>;
     }
   };
 
-  const handleCreateRoom = async () => {
-    const result = await createRoom({ playerName: name });
-    if (result.data?.createRoom) {
-      console.log(`Room successfully created: ${result.data.createRoom.id}`);
-      Router.push("Room", { roomId: result.data.createRoom.id.toString() });
-    }
+  const handleCloseForm = () => {
+    setRoomId("");
+    setSelectedLocale(null);
+    setIsJoinRoomFormVisible(false);
+    setIsCreateRoomFormVisible(false);
   };
 
   return (
@@ -142,7 +171,51 @@ export const RoomOptions = () => {
       <div className="page-content">
         <p className="text-lg self-center">{t("home.what-to-do")}</p>
         <div className="create-room-option flex flex-col space-y-12 m-auto">
-          {isFormVisible ? (
+          {isCreateRoomFormVisible && (
+            <>
+              <form
+                onSubmit={handleCreateRoomFormSubmit}
+                className="join-room-form flex flex-col space-y-3 items-center self-center"
+              >
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  onClick={handleCloseForm}
+                  className="flex self-end"
+                >
+                  <X color="#cad2d7" />
+                </Button>
+                <div className="flex flex-col space-y-6 w-full">
+                  <Label className="form-label text-lg m-auto text-pumpkin-300">
+                    {t("form.create-room.label")}
+                  </Label>
+                  <div className="flex space-x-6">
+                    <Select onValueChange={handleSelectedLocaleChange} value={selectedLocale || ""}>
+                      <SelectTrigger className="w-[180px] m-auto">
+                        <SelectValue placeholder={t("form.create-room.select-value.placeholder")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="en">{t("locale.english")}</SelectItem>
+                          <SelectItem value="fr">{t("locale.french")}</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    <Button
+                      type="submit"
+                      className="submit-btn m-auto"
+                      disabled={!selectedLocale}
+                      size="lg"
+                    >
+                      {t("button.create")}
+                    </Button>
+                  </div>
+                </div>
+              </form>
+            </>
+          )}
+          {isJoinRoomFormVisible && (
             <>
               <form
                 onSubmit={handleJoinRoomFormSubmit}
@@ -164,7 +237,7 @@ export const RoomOptions = () => {
                   <Input
                     name="roomId"
                     value={roomId}
-                    onChange={handleRoomNumberChange}
+                    onChange={handleRoomIdChange}
                     placeholder={t("form.join-room.input.placeholder")}
                     maxLength={6}
                     className="w-2/4"
@@ -175,12 +248,14 @@ export const RoomOptions = () => {
                 </div>
               </form>
             </>
-          ) : (
+          )}
+
+          {!isCreateRoomFormVisible && !isJoinRoomFormVisible && (
             <>
-              <Button type="submit" onClick={handleCreateRoom} size="lg">
+              <Button type="submit" onClick={handleOpenCreateRoomForm} size="lg">
                 {t("button.create-room")}
               </Button>
-              <Button type="button" onClick={() => setIsFormVisible(true)}>
+              <Button type="button" onClick={handleOpenJoinRoomForm} size="lg">
                 {t("button.join-room")}
               </Button>
             </>
