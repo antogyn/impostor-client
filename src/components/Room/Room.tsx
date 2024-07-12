@@ -4,6 +4,7 @@ import { useMutation, useQuery, useSubscription } from "urql";
 import { NameContext } from "../../contexts/name-context";
 import { Router } from "../Router";
 import { UserOptions } from "./UserOptions/UserOptions";
+import { RotatingLines } from "react-loader-spinner";
 
 import type { FormEvent } from "react";
 
@@ -225,7 +226,17 @@ export const Room = ({ id }: { id: number }) => {
               {t("button.start-game")} <CirclePlay className="ml-3" size={24} />
             </Button>
           ) : (
-            <p className="text-sm m-auto">{t("room.game-starting-soon", { firstPlayer })} 🏁</p>
+            <div className="flex space-x-3">
+              <p className="text-sm m-auto">{t("room.game-starting-soon", { firstPlayer })}</p>
+              <RotatingLines
+                visible={true}
+                width="30"
+                strokeColor="#fe8f39"
+                strokeWidth="5"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+              />
+            </div>
           )}
         </div>
         <div className="list-container flex flex-col w-[90%] m-auto items-center space-y-6 py-3 h-[350px] overflow-hidden p-6 ">
