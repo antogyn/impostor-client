@@ -30,6 +30,10 @@ p {
   @apply flex flex-col h-[70%];
 }
 
+.room-option-form {
+  @apply flex flex-col items-center self-center border-2 border-solid p-3 rounded-lg border-pumpkin-300 bg-shark-400/60;
+}
+
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
