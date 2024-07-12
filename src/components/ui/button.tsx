@@ -17,7 +17,7 @@ const buttonVariants = cva(
         secondary:
           "bg-mako-400 text-xs text-gallery-200 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-mortar-50 dark:hover:bg-slate-800/80 capitalize",
         ghost:
-          "hover:bg-summer-green-400/90 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-mortar-50",
+          "hover:bg-pumpkin-400 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-mortar-50",
         link: "text-slate-900 underline-offset-4 hover:underline dark:text-mortar-50",
         cta: "bg-mako-400 text-gallery-100 hover:bg-mako-400/90 uppercase text-sm",
       },
