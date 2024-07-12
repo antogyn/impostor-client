@@ -174,7 +174,7 @@ export const RoomOptions = () => {
             <>
               <form
                 onSubmit={handleCreateRoomFormSubmit}
-                className="join-room-form flex flex-col space-y-3 items-center self-center"
+                className="create-room-form room-option-form"
               >
                 <Button
                   type="button"
@@ -216,10 +216,7 @@ export const RoomOptions = () => {
           )}
           {isJoinRoomFormVisible && (
             <>
-              <form
-                onSubmit={handleJoinRoomFormSubmit}
-                className="join-room-form flex flex-col space-y-3 items-center self-center"
-              >
+              <form onSubmit={handleJoinRoomFormSubmit} className="join-room-form room-option-form">
                 <Button
                   type="button"
                   size="icon"
@@ -229,21 +226,23 @@ export const RoomOptions = () => {
                 >
                   <X color="#cad2d7" />
                 </Button>
-                <Label className="form-label text-lg text-pumpkin-300">
-                  {t("form.join-room.label")}
-                </Label>
-                <div className="flex w-full items-center justify-evenly">
-                  <Input
-                    name="roomId"
-                    value={roomId}
-                    onChange={handleRoomIdChange}
-                    placeholder={t("form.join-room.input.placeholder")}
-                    maxLength={6}
-                    className="w-2/4"
-                  />
-                  <Button type="submit" className="submit-btn" disabled={!roomId} size="lg">
-                    {t("button.join")}
-                  </Button>
+                <div className="flex flex-col space-y-6 w-full">
+                  <Label className="form-label text-lg text-pumpkin-300 m-auto">
+                    {t("form.join-room.label")}
+                  </Label>
+                  <div className="flex w-full items-center justify-evenly">
+                    <Input
+                      name="roomId"
+                      value={roomId}
+                      onChange={handleRoomIdChange}
+                      placeholder={t("form.join-room.input.placeholder")}
+                      maxLength={6}
+                      className="w-2/4"
+                    />
+                    <Button type="submit" className="submit-btn" disabled={!roomId} size="lg">
+                      {t("button.join")}
+                    </Button>
+                  </div>
                 </div>
               </form>
             </>
