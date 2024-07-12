@@ -178,7 +178,7 @@ export const Room = ({ id }: { id: number }) => {
   const gameLocale = roomQueryResult.data.room?.language;
   const playersList = roomQueryResult.data.room?.players || [];
   const firstPlayer = playersList.length > 0 ? playersList[0].name : null;
-  const isFirstPlayer = playerName === firstPlayer;
+  const isFirstPlayerInRoom = playerName === firstPlayer;
   const gameCanStart = playersList && playersList.length >= 2;
   const gameHasStarted = gameStartedSubscriptionResult.data;
   const role = gameStartedSubscriptionResult.data?.gameStarted?.__typename;
@@ -216,7 +216,7 @@ export const Room = ({ id }: { id: number }) => {
               ? t("room.game.selected-locale.fr")
               : t("room.game.selected-locale.en")}
           </p>
-          {isFirstPlayer ? (
+          {isFirstPlayerInRoom ? (
             <Button
               type="button"
               onClick={() => startGame({ roomId: id })}
