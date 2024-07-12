@@ -7,10 +7,10 @@ export const LocaleSelector = () => {
   };
 
   const activeLocale = localStorage.getItem("i18nextLng");
-  console.log(activeLocale);
+  console.log(`ActiveLocale is: ${activeLocale}`);
 
   return (
-    <div className="absolute top-4 right-4 flex items-center space-x-2">
+    <div className="absolute top-4 right-4 flex items-center space-x-3">
       <Button
         className={`fr-btn ${activeLocale === "fr" ? "active-locale-btn" : ""}`}
         type="button"
