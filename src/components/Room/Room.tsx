@@ -32,6 +32,7 @@ const RoomQuery = graphql(`
       players {
         name
       }
+      language
     }
   }
 `);
@@ -173,6 +174,7 @@ export const Room = ({ id }: { id: number }) => {
     return;
   }
 
+  const gameLocale = roomQueryResult.data.room?.language;
   const playersList = roomQueryResult.data.room?.players || [];
   const firstPlayer = playersList.length > 0 ? playersList[0].name : null;
   const isFirstPlayer = playerName === firstPlayer;
@@ -206,7 +208,13 @@ export const Room = ({ id }: { id: number }) => {
         <UserOptions id={id} />
       </div>
       <div className="page-content w-full space-y-6 border-t-[1.5px] border-pumpkin-200 p-6">
-        <div className="flex w-full">
+        <div className="flex flex-col w-full space-y-6 items-center">
+          <p className="game-locale text-sm">
+            {t("room.game.selected-locale-is")}{" "}
+            {gameLocale === "fr"
+              ? t("room.game.selected-locale.fr")
+              : t("room.game.selected-locale.en")}
+          </p>
           {isFirstPlayer ? (
             <Button
               type="button"
