@@ -7,6 +7,7 @@ import { SetName } from "../SetName/SetName";
 import { useTranslation } from "react-i18next";
 
 import { LocaleSelector } from "./LocaleSelector/LocaleSelector";
+import { GameRules } from "./GameRules/GameRules";
 // import ScreenSize from "../devComponent/ScreenSize";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <body className="app flex flex-col bg-[url('/background/background.svg')] h-[100vh] w-[100vw] p-3">
         <div className="responsive-content flex flex-col h-full w-full sm:max-w-[640px] sm:max-h-[700px] m-auto">
           <header className="header flex flex-col h-[15vh] items-center justify-center">
+            <GameRules />
             <LocaleSelector />
             <svg fill="#fd7014" height="50%" viewBox="0 0 612 792">
               <title>Masquerade Icon</title>
