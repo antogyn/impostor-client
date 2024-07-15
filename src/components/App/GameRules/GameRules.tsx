@@ -24,10 +24,10 @@ export const GameRules = () => {
             ❓
           </Button>
         </SheetTrigger>
-        <SheetContent className="w-screen h-screen">
+        <SheetContent className="w-screen h-screen overflow-y-scroll">
           <SheetHeader>
             <SheetTitle>{t("app.game-rules.how-to-play")}</SheetTitle>
-            <SheetDescription className="space-y-6 flex flex-col justify-center">
+            <SheetDescription className="space-y-6 h-full max-h-full flex flex-col justify-center ">
               <h4>{t("app.game-rules.principle.title")}</h4>
               <div>
                 {principles.map((principle) => (
