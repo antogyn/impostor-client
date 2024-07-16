@@ -60,7 +60,7 @@
   "room.game.selected-locale.en": "English",
   "room.game.selected-locale.fr": "French",
   "room.game.you-start": "You start the game!",
-  "room.game-starting-soon": "{{gameMaster}} will start the game soon!",
+  "room.game-starting-soon": "{{gameMaster}} is the Game\u00a0Master of the room!",
   "room.greeting": "Welcome to Room {{id}}!",
   "room.players-in-room": "Players in room:",
   "setName.greeting": "Welcome to Room {{id}}!",

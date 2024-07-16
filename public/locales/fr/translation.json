@@ -60,7 +60,7 @@
   "room.game.selected-locale.en": "anglaise",
   "room.game.selected-locale.fr": "française",
   "room.game.you-start": "C\u2019est à vous de commencer\u00a0!",
-  "room.game-starting-soon": "{{gameMaster}} va bientôt démarrer le jeu\u00a0!",
+  "room.game-starting-soon": "{{gameMaster}} est le Game\u00a0Master de la salle\u00a0!",
   "room.greeting": "Bienvenue dans la salle {{id}}\u00a0!",
   "room.players-in-room": "Joueurs présents\u00a0:",
   "setName.greeting": "Bienvenue dans la salle {{id}}\u00a0!",
