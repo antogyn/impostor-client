@@ -4,7 +4,6 @@ import { useMutation, useQuery, useSubscription } from "urql";
 import { NameContext } from "../../contexts/name-context";
 import { Router } from "../Router";
 import { UserOptions } from "./UserOptions/UserOptions";
-import { RotatingLines } from "react-loader-spinner";
 
 import type { FormEvent } from "react";
 
@@ -233,14 +232,6 @@ export const Room = ({ id }: { id: number }) => {
           ) : (
             <div className="flex space-x-3">
               <p className="text-sm m-auto">{t("room.game-starting-soon", { gameMaster })}</p>
-              <RotatingLines
-                visible={true}
-                width="30"
-                strokeColor="#fe8f39"
-                strokeWidth="5"
-                animationDuration="0.75"
-                ariaLabel="rotating-lines-loading"
-              />
             </div>
           )}
         </div>
