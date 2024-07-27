@@ -7,8 +7,8 @@ export const Home = () => {
   const [name] = useContext(NameContext);
 
   return (
-    <main className="home-container flex flex-col space-y-9 w-full h-full">
+    <div className="home-container flex flex-col grow space-y-9 w-full h-full">
       {name ? <RoomOptions /> : <RegisterUserForm />}
-    </main>
+    </div>
   );
 };

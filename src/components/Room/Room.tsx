@@ -62,15 +62,15 @@ const GameStartedSubscription = graphql(`
 `);
 
 const JoinRoomMutation = graphql(`
-   mutation JoinRoom($roomId: Int!, $playerName: String!) {
+  mutation JoinRoom($roomId: Int!, $playerName: String!) {
     joinRoom(roomId: $roomId, playerName: $playerName) {
-       id
-       players {
-         name
-       }
-     }
-   }
- `);
+      id
+      players {
+        name
+      }
+    }
+  }
+`);
 
 const StartGameMutation = graphql(`
   mutation StartGame($roomId: Int!) {
@@ -79,16 +79,16 @@ const StartGameMutation = graphql(`
 `);
 
 const LeaveRoomMutation = graphql(`
-    mutation LeaveRoom($roomId: Int!, $playerName: String!) {
-      leaveRoom(roomId: $roomId, playerName: $playerName) {
-        __typename
-        id
-        players {
-          name
-        }
+  mutation LeaveRoom($roomId: Int!, $playerName: String!) {
+    leaveRoom(roomId: $roomId, playerName: $playerName) {
+      __typename
+      id
+      players {
+        name
       }
     }
-  `);
+  }
+`);
 
 interface Player {
   name: string;
@@ -140,7 +140,7 @@ export const Room = ({ id }: { id: number }) => {
     if (roomQueryResult.data?.room && !hasJoined) {
       // check if player is in room already
       const hasAlreadyJoined = roomQueryResult.data.room.players.some(
-        ({ name }) => name === playerName,
+        ({ name }) => name === playerName
       );
       console.log("Has player already joined?", hasAlreadyJoined);
       if (!hasAlreadyJoined) {
@@ -157,10 +157,13 @@ export const Room = ({ id }: { id: number }) => {
 
   useEffect(() => {
     if (roomUpdatedSubscriptionResult.data?.roomUpdated?.players) {
-      const updatedPlayers = roomUpdatedSubscriptionResult.data.roomUpdated.players;
+      const updatedPlayers =
+        roomUpdatedSubscriptionResult.data.roomUpdated.players;
       setPlayers(updatedPlayers);
       console.log(
-        `Something changed!\nPlayers list:\n${updatedPlayers.map((player) => player.name).join("\n")}`,
+        `Something changed!\nPlayers list:\n${updatedPlayers
+          .map((player) => player.name)
+          .join("\n")}`
       );
       if (!updatedPlayers.some(({ name }) => name === playerName)) {
         Router.replace("Home");
@@ -183,11 +186,13 @@ export const Room = ({ id }: { id: number }) => {
   const gameHasStarted = gameStartedSubscriptionResult.data;
   const role = gameStartedSubscriptionResult.data?.gameStarted?.__typename;
   const secretWord =
-    gameStartedSubscriptionResult.data?.gameStarted?.__typename === "RegularInfo"
+    gameStartedSubscriptionResult.data?.gameStarted?.__typename ===
+    "RegularInfo"
       ? gameStartedSubscriptionResult.data?.gameStarted?.word
       : null;
   const isFirstToPlay =
-    gameStartedSubscriptionResult.data?.gameStarted?.__typename === "RegularInfo"
+    gameStartedSubscriptionResult.data?.gameStarted?.__typename ===
+    "RegularInfo"
       ? gameStartedSubscriptionResult.data?.gameStarted?.isFirstPlayer
       : false;
 
@@ -197,7 +202,9 @@ export const Room = ({ id }: { id: number }) => {
     if (result.data?.leaveRoom?.players) {
       const updatedPlayers = result.data.leaveRoom.players;
       console.log(
-        `Players list updated:\n${updatedPlayers.map((player) => player.name).join("\n")}`,
+        `Players list updated:\n${updatedPlayers
+          .map((player) => player.name)
+          .join("\n")}`
       );
       setPlayers(updatedPlayers);
       if (selectedPlayer === playerName) {
@@ -231,16 +238,42 @@ export const Room = ({ id }: { id: number }) => {
             </Button>
           ) : (
             <div className="flex space-x-3">
-              <p className="text-sm m-auto">{t("room.game-starting-soon", { gameMaster })}</p>
+              <p className="text-sm m-auto">
+                {t("room.game-starting-soon", { gameMaster })}
+              </p>
             </div>
           )}
         </div>
-        <div className="list-container flex flex-col w-[90%] m-auto items-center space-y-6 py-3 h-[350px] overflow-hidden p-6 ">
+        <div className="game-data flex flex-col items-center">
+          {gameHasStarted && (
+            <>
+              {role === "ImpostorInfo" ? (
+                <p className="text-xl m-auto flex">
+                  {t("room.game.impostor")} 🤫
+                </p>
+              ) : (
+                <p className="text-xl m-auto flex text-center">
+                  {t("room.game.secret-word-is")}{" "}
+                  {t("room.game.secret-word", { secretWord })} 🙊
+                </p>
+              )}
+              {isFirstToPlay && (
+                <p className="text-sm m-auto flex text-center">
+                  {t("room.game.you-start")}
+                </p>
+              )}
+            </>
+          )}
+        </div>
+        <div className="list-container flex flex-col w-[90%] m-auto items-center space-y-3">
           <h3>{t("room.players-in-room")}</h3>
           <ul className="list-content flex flex-col w-full items-center max-h-[500px] overflow-y-auto no-scrollbar space-y-2">
             {playersList?.map((player) => {
               return (
-                <li key={player.name} className="flex space-x-2 w-full items-center justify-center">
+                <li
+                  key={player.name}
+                  className="flex space-x-2 w-full items-center justify-center"
+                >
                   <p className="flex">
                     {player.name === playerName
                       ? `${player.name} (${t("room.current-player")})`
@@ -253,13 +286,19 @@ export const Room = ({ id }: { id: number }) => {
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
-                          <AlertDialogTitle>{t("room.alert-dialog.title")}</AlertDialogTitle>
+                          <AlertDialogTitle>
+                            {t("room.alert-dialog.title")}
+                          </AlertDialogTitle>
                           <AlertDialogDescription>
-                            {t("room.alert-dialog.content", { player: player.name })}
+                            {t("room.alert-dialog.content", {
+                              player: player.name,
+                            })}
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel>{t("button.cancel")}</AlertDialogCancel>
+                          <AlertDialogCancel>
+                            {t("button.cancel")}
+                          </AlertDialogCancel>
                           <AlertDialogAction
                             type="button"
                             onClick={(e) => handleKickPlayerOut(e, player.name)}
@@ -274,22 +313,6 @@ export const Room = ({ id }: { id: number }) => {
               );
             })}
           </ul>
-        </div>
-        <div className="game-data flex flex-col items-center">
-          {gameHasStarted && (
-            <>
-              {role === "ImpostorInfo" ? (
-                <p className="text-xl m-auto flex">{t("room.game.impostor")} 🤫</p>
-              ) : (
-                <p className="text-xl m-auto flex text-center">
-                  {t("room.game.secret-word-is")} {t("room.game.secret-word", { secretWord })} 🙊
-                </p>
-              )}
-              {isFirstToPlay && (
-                <p className="text-sm m-auto flex text-center">{t("room.game.you-start")}</p>
-              )}
-            </>
-          )}
         </div>
       </div>
     </main>

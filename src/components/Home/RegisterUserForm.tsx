@@ -27,7 +27,7 @@ export const RegisterUserForm = () => {
   };
 
   return (
-    <section className="username-form-container flex flex-col w-full h-3/4 m-auto">
+    <section className="username-form-container flex flex-col grow w-full h-3/4 m-auto">
       <div className="username-form-header flex flex-col m-auto space-y-3">
         <h2>{t("app.greeting")} 👋</h2>
         <p className="text-md">{t("app.tell-us-more")}</p>
