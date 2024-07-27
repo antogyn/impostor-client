@@ -8,22 +8,9 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      injectRegister: "auto",
       registerType: "autoUpdate",
-      includeAssets: ["icon.ico", "impostor.svg"],
-      manifest: {
-        name: "Impostor Online Game",
-        short_name: "Impostor",
-        description: "Impostor Online Game",
-        theme_color: "#ffffff",
-        icons: [
-          {
-            src: "impostor.svg",
-            sizes: "48x48 72x72 96x96 128x128 192x192 256x256 512x512",
-            type: "image/svg+xml",
-            purpose: "any",
-          },
-        ],
-      },
+      includeAssets: ["icon.ico"],
     }),
   ],
   resolve: {
