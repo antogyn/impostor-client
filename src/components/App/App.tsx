@@ -16,9 +16,9 @@ function App() {
 
   return (
     <AppContextsProvider>
-      <div className="bg-[url('/background/background.svg')] h-[100%] min-h-[100vh]">
+      <div className="bg-[url('/background/background.svg')] h-[100%] min-h-[100dvh]">
         <div className="responsive-content p-3 flex flex-col h-full w-full sm:max-w-[640px] sm:max-h-[700px] m-auto min-h-[inherit]">
-          <header className="header flex flex-col h-[15vh] items-center justify-center">
+          <header className="header flex flex-col h-[15dvh] items-center justify-center">
             <GameRules />
             <LocaleSelector />
             <svg fill="#fd7014" viewBox="0 0 512 512">
