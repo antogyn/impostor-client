@@ -54,7 +54,7 @@ function App() {
             <h1 className="app-title">•&nbsp;{t("app.title")}&nbsp;•</h1>
             <p className="app-subtitle text-lg">{t("app.subtitle")}</p>
           </header>
-          <main className="body flex flex-col h-[85vh]">
+          <main className="body flex flex-col grow">
             {match(route)
               .with({ name: "Home" }, () => <Home />)
               .with({ name: "Room" }, ({ params }) => (

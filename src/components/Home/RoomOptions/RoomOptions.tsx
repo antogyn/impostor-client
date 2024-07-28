@@ -184,9 +184,9 @@ export const RoomOptions = () => {
       </div>
       <div className="h-3" />
       <div className="page-content">
-        <div className="m-auto">
+        <div className="m-auto space-y-6">
           <p className="text-lg self-center">{t("home.what-to-do")}</p>
-          <div className="create-room-option flex flex-col space-y-12 m-auto">
+          <div className="create-room-option flex flex-col space-y-8 m-auto">
             {isCreateRoomFormVisible && (
               <>
                 <form
