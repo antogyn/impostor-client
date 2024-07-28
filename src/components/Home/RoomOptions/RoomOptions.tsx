@@ -20,6 +20,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { type IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+  DialogHeader,
+} from "@/components/ui/dialog";
+
 const CreateRoomMutation = graphql(`
   mutation CreateRoom($playerName: String!, $language: Language!) {
     createRoom(playerName: $playerName, language: $language) {
@@ -127,6 +137,18 @@ export const RoomOptions = () => {
     setSelectedLocale(null);
     setIsJoinRoomFormVisible(false);
     setIsCreateRoomFormVisible(false);
+  };
+
+  const scanQrCode = (detectedCodes: IDetectedBarcode[]): void => {
+    console.log(detectedCodes);
+    for (const code of detectedCodes) {
+      const url = new URL(code.rawValue);
+      const [_empty, roomPath, roomIdFromQRCode] = url.pathname.split("/");
+      if (roomPath === "rooms") {
+        Router.push("Room", { roomId: roomIdFromQRCode });
+        return;
+      }
+    }
   };
 
   return (
@@ -279,6 +301,19 @@ export const RoomOptions = () => {
                         {t("button.join")}
                       </Button>
                     </div>
+
+                    <Dialog>
+                      <DialogTrigger>
+                        <Button type="button">
+                          {t("button.join-by-qr-code")}
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="flex flex-col space-y-3">
+                        <DialogDescription className="space-y-6 flex flex-col m-auto items-center aspect-square">
+                          <Scanner onScan={scanQrCode} />
+                        </DialogDescription>
+                      </DialogContent>
+                    </Dialog>
                   </div>
                 </form>
               </>

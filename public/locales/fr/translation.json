@@ -31,6 +31,7 @@
   "button.hide-qr": "Cacher le QR code",
   "button.leave-room": "Quitter",
   "button.join": "Rejoindre",
+  "button.join-by-qr-code": "Rejoindre par QR Code",
   "button.join-room": "Rejoindre une salle",
   "button.next": "Suivant",
   "button.start-game": "Jouer",
