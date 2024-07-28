@@ -11,6 +11,11 @@ export default defineConfig({
       injectRegister: "auto",
       registerType: "autoUpdate",
       includeAssets: ["icon.ico"],
+      workbox: {
+        globIgnores: ["**/index.html"],
+        globPatterns: ["**/*.{js,wasm,css,html,svg}"],
+        dontCacheBustURLsMatching: /-[a-zA-Z0-9]{8}\./,
+      },
     }),
   ],
   resolve: {
