@@ -20,15 +20,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { type IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-  DialogHeader,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
+import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 
 const CreateRoomMutation = graphql(`
   mutation CreateRoom($playerName: String!, $language: Language!) {
@@ -73,8 +66,7 @@ export const RoomOptions = () => {
   };
 
   /* Handling create room feature */
-  const [isCreateRoomFormVisible, setIsCreateRoomFormVisible] =
-    useState<boolean>(false);
+  const [isCreateRoomFormVisible, setIsCreateRoomFormVisible] = useState<boolean>(false);
   const [selectedLocale, setSelectedLocale] = useState<string | null>(null);
 
   const handleOpenCreateRoomForm = () => {
@@ -109,8 +101,7 @@ export const RoomOptions = () => {
 
   /* Handling join room feature */
   const [roomId, setRoomId] = useState("");
-  const [isJoinRoomFormVisible, setIsJoinRoomFormVisible] =
-    useState<boolean>(false);
+  const [isJoinRoomFormVisible, setIsJoinRoomFormVisible] = useState<boolean>(false);
 
   const handleOpenJoinRoomForm = () => {
     setIsJoinRoomFormVisible(true);
@@ -169,14 +160,8 @@ export const RoomOptions = () => {
           </div>
         )}
         {isEditingName && (
-          <div
-            className="username-form-container flex m-auto"
-            hidden={!isEditingName}
-          >
-            <form
-              onSubmit={handleEditingConfirmation}
-              className="form flex space-x-3 m-auto"
-            >
+          <div className="username-form-container flex m-auto" hidden={!isEditingName}>
+            <form onSubmit={handleEditingConfirmation} className="form flex space-x-3 m-auto">
               <Input
                 type="text"
                 value={userInput}
@@ -184,11 +169,7 @@ export const RoomOptions = () => {
                 onChange={handleInputChange}
                 className="w-3/4"
               />
-              <Button
-                className="confirm-btn bg-summer-green-400"
-                type="submit"
-                size="icon"
-              >
+              <Button className="confirm-btn bg-summer-green-400" type="submit" size="icon">
                 <Check />
               </Button>
               <Button
@@ -235,19 +216,13 @@ export const RoomOptions = () => {
                       >
                         <SelectTrigger className="w-[180px] m-auto">
                           <SelectValue
-                            placeholder={t(
-                              "form.create-room.select-value.placeholder"
-                            )}
+                            placeholder={t("form.create-room.select-value.placeholder")}
                           />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value="en">
-                              {t("locale.english")}
-                            </SelectItem>
-                            <SelectItem value="fr">
-                              {t("locale.french")}
-                            </SelectItem>
+                            <SelectItem value="en">{t("locale.english")}</SelectItem>
+                            <SelectItem value="fr">{t("locale.french")}</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
@@ -292,21 +267,14 @@ export const RoomOptions = () => {
                         maxLength={6}
                         className="w-2/4"
                       />
-                      <Button
-                        type="submit"
-                        className="submit-btn"
-                        disabled={!roomId}
-                        size="lg"
-                      >
+                      <Button type="submit" className="submit-btn" disabled={!roomId} size="lg">
                         {t("button.join")}
                       </Button>
                     </div>
 
                     <Dialog>
                       <DialogTrigger>
-                        <Button type="button">
-                          {t("button.join-by-qr-code")}
-                        </Button>
+                        <Button type="button">{t("button.join-by-qr-code")}</Button>
                       </DialogTrigger>
                       <DialogContent className="flex flex-col space-y-3">
                         <DialogDescription className="space-y-6 flex flex-col m-auto items-center aspect-square">
@@ -321,18 +289,10 @@ export const RoomOptions = () => {
 
             {!isCreateRoomFormVisible && !isJoinRoomFormVisible && (
               <>
-                <Button
-                  type="submit"
-                  onClick={handleOpenCreateRoomForm}
-                  size="lg"
-                >
+                <Button type="submit" onClick={handleOpenCreateRoomForm} size="lg">
                   {t("button.create-room")}
                 </Button>
-                <Button
-                  type="button"
-                  onClick={handleOpenJoinRoomForm}
-                  size="lg"
-                >
+                <Button type="button" onClick={handleOpenJoinRoomForm} size="lg">
                   {t("button.join-room")}
                 </Button>
               </>
