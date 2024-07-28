@@ -3,6 +3,7 @@
   "short_name": "Impostor",
   "description": "Impostor Online Game",
   "theme_color": "#ffffff",
+  "display": "standalone",
   "icons": [
     {
       "src": "impostor.svg",
