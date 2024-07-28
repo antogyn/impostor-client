@@ -30,3 +30,13 @@ i18n
   });
 
 export default i18n;
+
+declare module "i18next" {
+  interface CustomTypeOptions {
+    defaultNS: "en";
+    resources: {
+      fr: typeof translationFR;
+      en: typeof translationEN;
+    };
+  }
+}
